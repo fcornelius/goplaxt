@@ -35,7 +35,8 @@ func SelfRoot(r *http.Request) string {
 	u, _ := url.Parse("")
 	u.Host = r.Host
 	u.Scheme = r.URL.Scheme
-	u.Path = ""
+	u.Path = os.Getenv("ROOT_PATH")
+
 	if u.Scheme == "" {
 		u.Scheme = "http"
 
@@ -176,7 +177,7 @@ func main() {
 	router.HandleFunc("/authorize", authorize).Methods("GET")
 	router.HandleFunc("/api", api).Methods("POST")
 	router.Handle("/healthcheck", healthcheckHandler()).Methods("GET")
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/setup", func(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("static/index.html"))
 		data := AuthorizePage{
 			SelfRoot:   SelfRoot(r),

@@ -103,7 +103,8 @@
     crossorigin="anonymous"></script>
 
     <script>
-      var authorization_link = "https://trakt.tv/oauth/authorize?client_id={{.ClientID}}&redirect_uri={{.SelfRoot}}/authorize%3fusername=USERNAME&response_type=code";
+      var redirectUri = encodeURIComponent("{{.SelfRoot}}/authorize?username=USERNAME")
+      var authorization_link = "https://trakt.tv/oauth/authorize?client_id={{.ClientID}}&redirect_uri="+redirectUri+"&response_type=code";
 
       $('.js-authorize').click(function() {
         var username = $('.js-username').val().toLowerCase();
